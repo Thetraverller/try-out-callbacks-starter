@@ -31,13 +31,51 @@ console.log(suffixCipher('incremental progress is very instrumental', cipher2));
 // INCREMENTAL progressth isth very INSTRUMENTAL
 *******************************************************************************/
 
-let suffixCipher = function() {
+let suffixCipher = function(sent, obj) {
+    let words = sent.split(" ")
+    let newArr = []
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i]
+        let newWord;
 
+        for (let key in obj) {
+            let cb = obj[key]
+
+            if (word.endsWith(key)) {
+                let newWord = cb(word)
+                newArr.push(newWord)
+                newWord = true
+            }
+        }
+        if (!newWord) {
+            newArr.push(word)
+        }
+    }
+    return newArr.join(" ")
 };
+//------
 
+let cipher1 = {
+    ly: function(word) {
+        return word.slice(0, -1) + 'ee';
+    },
+    ize: function(word) {
+        return word + 'r';
+    }
+};
+console.log(suffixCipher('quietly and gently visualize', cipher1));
+// quietlee and gentlee visualizer
 
-
-
+let cipher2 = {
+    tal: function(word) {
+        return word.toUpperCase();
+    },
+    s: function(word) {
+        return word + 'th';
+    }
+};
+console.log(suffixCipher('incremental progress is very instrumental', cipher2));
+// INCREMENTAL progressth isth very INSTRUMENTAL
 
 
 /*****************DO NOT MODIFY ANYTHING UNDER THIS  LINE**********************/
